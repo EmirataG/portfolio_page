@@ -1,0 +1,98 @@
+:root {
+  color-scheme: light;
+  background: #fff;
+  color: #000;
+}
+
+:root[data-lamp='off'] {
+  color-scheme: dark;
+  background: #000;
+  color: #fff;
+}
+
+body {
+  margin: 1.5rem 2rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  margin: 0;
+}
+
+p {
+  margin: 0.5rem 0 0;
+}
+
+svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Light switch, seen from the side */
+
+#switch {
+  /* cancel the page margin (and the 3px of empty viewBox behind the plate)
+     so the plate sits against the screen edge like a wall */
+  margin-right: calc(-2rem - 3px);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  line-height: 0;
+}
+
+#switch rect {
+  fill: currentColor;
+}
+
+.lever {
+  transform-origin: 21px 22px;
+  transform: rotate(25deg);
+  transition: transform 0.12s ease-out;
+}
+
+[data-lamp='off'] .lever {
+  transform: rotate(-25deg);
+}
+
+/* Hanging lamp */
+
+.lamp {
+  position: absolute;
+  top: 0;
+  right: 6rem;
+  transform-origin: 50% 0;
+  animation: swing 3.5s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+[data-lamp='off'] .rays {
+  display: none;
+}
+
+@keyframes swing {
+  from {
+    transform: rotate(-2.5deg);
+  }
+  to {
+    transform: rotate(2.5deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lamp {
+    animation: none;
+  }
+  .lever {
+    transition: none;
+  }
+}
