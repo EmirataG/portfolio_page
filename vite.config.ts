@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
+  // relative asset URLs, so the site works under /portfolio_page/ on GitHub Pages
+  base: './',
   build: {
     rollupOptions: {
       input: ['index.html', 'blog/index.html', 'blog/faking-art.html', 'blog/pec-synth.html'],
