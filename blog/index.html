@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="photos">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog · Emir Ahmed</title>
     <script>
@@ -15,12 +15,21 @@
   </head>
   <body>
     <header>
-      <div class="ceiling">
+      <div class="masthead">
         <div class="name">
           <h1><a href="../">Emir Ahmed</a></h1>
           <p>CS &amp; EE @ Yale</p>
         </div>
-        <svg class="lamp" viewBox="0 30 60 80" width="60" height="80" aria-hidden="true">
+        <nav aria-label="Site">
+          <a href="../">Home</a>
+          <a href="./">Blog</a>
+          <a href="faking-art.html">Faking Art</a>
+          <a href="pec-synth.html">Pec Synth</a>
+        </nav>
+      </div>
+      <div class="fixture">
+        <img class="lamp photo" src="/photos/lamp.png" alt="" width="56" height="44" />
+        <svg class="lamp drawing" viewBox="0 30 60 80" width="60" height="80" aria-hidden="true">
           <line x1="30" y1="30" x2="30" y2="60" />
           <rect x="26" y="60" width="8" height="6" />
           <path d="M22 66 L38 66 L52 90 L8 90 Z" />
@@ -31,20 +40,26 @@
             <line x1="39" y1="99" x2="44" y2="105" />
           </g>
         </svg>
-        <button id="switch" type="button" role="switch" aria-checked="true" aria-label="Lamp">
-          <svg viewBox="0 0 28 44" width="28" height="44" aria-hidden="true">
-            <polygon class="lever" points="21,18 21,26 4,24 4,20" />
-            <rect x="20" y="2" width="5" height="40" />
-          </svg>
-        </button>
       </div>
-      <nav aria-label="Site">
-        <a href="../">Home</a>
-        <a href="./">Blog</a>
-        <a href="faking-art.html">Faking Art</a>
-        <a href="pec-synth.html">Pec Synth</a>
-      </nav>
+      <button id="switch" type="button" role="switch" aria-checked="true" aria-label="Lamp">
+        <img class="photo on" src="/photos/switch-on.png" alt="" width="30" height="45" />
+        <img class="photo off" src="/photos/switch-off.png" alt="" width="30" height="45" />
+        <svg class="drawing" viewBox="0 0 28 44" width="28" height="44" aria-hidden="true">
+          <polygon class="lever" points="21,18 21,26 4,24 4,20" />
+          <rect x="20" y="2" width="5" height="40" />
+        </svg>
+      </button>
     </header>
+
+    <a class="printer" href="../resume.pdf" download="Emir Ahmed - Resume.pdf" aria-label="Download resume (PDF)" title="Download resume (PDF)">
+      <img class="photo" src="/photos/printer.png" alt="" width="72" height="44" />
+      <svg class="drawing" viewBox="0 0 32 24" width="32" height="24" aria-hidden="true">
+        <path class="sheet" d="M10 9 V2 H22 V9" />
+        <rect x="3" y="9" width="26" height="14" rx="1.5" />
+        <line x1="8" y1="18" x2="24" y2="18" />
+        <line x1="24" y1="13" x2="25" y2="13" />
+      </svg>
+    </a>
 
     <main class="post">
       <h2>Blog</h2>
