@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pec Synth · Emir Ahmed</title>
+    <script>
+      // Set the theme before first paint so the page never flashes the wrong mode.
+      try {
+        if (localStorage.getItem('lamp') === 'off') document.documentElement.dataset.lamp = 'off'
+      } catch {}
+    </script>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="ceiling">
+        <div class="name">
+          <h1><a href="/">Emir Ahmed</a></h1>
+          <p>CS &amp; EE @ Yale</p>
+        </div>
+        <svg class="lamp" viewBox="0 30 60 80" width="60" height="80" aria-hidden="true">
+          <line x1="30" y1="30" x2="30" y2="60" />
+          <rect x="26" y="60" width="8" height="6" />
+          <path d="M22 66 L38 66 L52 90 L8 90 Z" />
+          <path d="M23 90 A7 7 0 0 0 37 90" />
+          <g class="rays">
+            <line x1="30" y1="101" x2="30" y2="108" />
+            <line x1="21" y1="99" x2="16" y2="105" />
+            <line x1="39" y1="99" x2="44" y2="105" />
+          </g>
+        </svg>
+        <button id="switch" type="button" role="switch" aria-checked="true" aria-label="Lamp">
+          <svg viewBox="0 0 28 44" width="28" height="44" aria-hidden="true">
+            <polygon class="lever" points="21,18 21,26 4,24 4,20" />
+            <rect x="20" y="2" width="5" height="40" />
+          </svg>
+        </button>
+      </div>
+      <nav aria-label="Site">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/blog/faking-art.html">Faking Art</a>
+        <a href="/blog/pec-synth.html">Pec Synth</a>
+      </nav>
+    </header>
+
+    <main class="post">
+      <h2>Pec Synth / MPec / Absolute Absurdity</h2>
+
+      <h3>Prelude (or how my sick mind came up with this)</h3>
+
+      <p>
+        I love playing <em>Dixit</em>, but I don’t really like the game… I just like the art on the cards. I mean,
+        just take a look at these:
+      </p>
+
+      <figure>
+        <img
+          src="https://coalition.agileuprising.com/uploads/default/original/1X/12e30e405661e59ea6098acb288bf056acac5fbc.jpg"
+          alt="Dixit cards"
+        />
+      </figure>
+
+      <p>
+        Many adjectives could describe the examples above, but absurd is one that easily applies to all of them.
+        This is the kind of absurdity whose presence for its own sake seems improbable, leaving the observer
+        searching for a deeper meaning. If found, that meaning is often accompanied by doubt in the intention of
+        the artist to convey it. That is, the meaning often turns out to be created rather than discovered.
+      </p>
+
+      <p>
+        Other times, absurdity in art is a vehicle for eliciting shock or surprise. <em>A Day in the Life</em> by
+        <em>The Beatles</em> comes to mind: elements of absurdity can be found both in the composition and in the
+        lyrics. Lennon’s main verses, McCartney’s upbeat middle section, and the orchestral transitions between the
+        two feel like they’re coming from completely different musical worlds; on the first few listens, the
+        contrast is genuinely jarring. Also what is John saying here? Laughing at a photograph of someone who “blew
+        his mind out in a car” … Why?
+      </p>
+
+      <h3>What the Hell is This Device</h3>
+
+      <p>
+        Yes, I am really fascinated by absurdity, and recently I decided to turn my most absurd shower thought of
+        late into a real project. The shower thought in question… “What if I could play Turkish maqams by flexing
+        my chest muscles?” I had two spare Seeed XIAO nRF52840 Sense boards collecting dust in my room, so I
+        figured that I could use their built-in accelerometers and gyroscopes to detect changes in pose induced by
+        chest muscle flexion, so the vision was there: the two Sense boards wrapped in small enclosures and
+        velcroed to my nipples bouncing up and down as I flex my chest and sending signals to an ESP 32 that are
+        ultimately translated to pitches by a Raspberry Pi 5 wired to a USB speaker. Just imagine this GIF of The
+        Rock except every bounce produces the next note in a traditional Ottoman tune.
+      </p>
+
+      <figure>
+        <img
+          src="https://media.tenor.com/pmto8W2cZa8AAAAM/dwayne-johnson-josh-hutcherson.gif"
+          alt="The Rock flexing his pecs"
+          loading="lazy"
+        />
+      </figure>
+
+      <p>
+        My sincerest apologies if you feel uncomfortable reading this, but absurdity is a crucial part of the
+        experience here.
+      </p>
+
+      <p>To be more specific about the pec-to-music mapping:</p>
+      <ul>
+        <li>Right pec = go up the scale (to the upper neighbor)</li>
+        <li>Left pec = go down the scale (to the lower neighbor)</li>
+        <li>Both pecs = repeat the current note</li>
+      </ul>
+
+      <h3>The Process</h3>
+
+      <p>
+        First I had to get the core of the firmware going—namely, how do I get the Sense boards to detect muscle
+        flexion. The idea was simple: assuming that the user has good pectoral muscle control, flexing it should
+        create a spike in the accelerometer and gyroscope readings. The first script I tested did not get the job
+        done: it was too sensitive to noise, and classified almost every motion as both pecs being flexed (one
+        could argue that this is a muscle control skill issue on my end.) So I knew I needed data—what separated
+        change in pose due to noise and real flexion. I asked Claude to write a script that would record me doing a
+        pre-defined set of movements at specified times. Running it produced a time series dataset where each row
+        was stamped with “right pec flexed”, “left pec flexed”, “both pecs flexed”, and “idle”. With this
+        information, Claude was able to derive good-enough heuristics, and flex detection became reliable.
+      </p>
+
+      <p>
+        Latency is a thing I kept coming back to. My first instinct was that the Bluetooth speaker was to blame,
+        and it was partly right: PipeWire reported 141 ms of buffering on it. But rather than guess, Claude
+        measured each stage separately. A single flex was waiting 200 ms just to see whether the other pec would
+        join in; checking whether the other board was moving at all cut that to 20 ms. Deciding “left, right or
+        both” 40 ms after a flex starts, instead of waiting for it to peak, took recognition from 108 ms to 43 with
+        no loss of accuracy on the recording. When the USB speaker I’d ordered from Amazon finally arrived, it
+        removed the Bluetooth delay; the instrument finally felt like it was listening to me rather than politely
+        waiting for the next beat.
+      </p>
+
+      <p>
+        Then I could finally look at the artifact before me as a real instrument rather than a pipeline. I replaced
+        the Western scales I used for testing with eight Turkish maqams on C, chosen so that none need quarter
+        tones and all contain the G of the drone; every run starts on C, on a strong beat, so you always know where
+        you are. I designed an enclosure with a button and two potentiometers, logarithmic ones, as I could find no
+        linear ones in the makerspace, which the firmware has to un-warp so that equal turns mean equal changes.
+        While you play, the scale knob sets how far a flex jumps, from repeating the same note up to a full octave,
+        and the tempo knob bends the melody up to a quarter tone either way, with the drone staying put so you hear
+        the detuning.
+      </p>
+
+      <h3>(Do) I want to see this (?)</h3>
+
+      <p>
+        You can see a demo <a href="https://youtu.be/8TX-WpnAImw" target="_blank" rel="noopener">here</a>!
+      </p>
+
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/8TX-WpnAImw"
+        title="Pec Synth demo"
+        loading="lazy"
+        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+
+      <h4>P.S.</h4>
+
+      <p>
+        Shower thought: <em>Lucy in the Sky With Diamonds</em> by <em>The Beatles</em> is the musical equivalent of
+        a Dixit card.
+      </p>
+
+      <p class="more">
+        The code is on <a href="https://github.com/EmirataG/pec-synth" target="_blank" rel="noopener">GitHub</a>.
+      </p>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

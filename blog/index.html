@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog · Emir Ahmed</title>
+    <script>
+      // Set the theme before first paint so the page never flashes the wrong mode.
+      try {
+        if (localStorage.getItem('lamp') === 'off') document.documentElement.dataset.lamp = 'off'
+      } catch {}
+    </script>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="ceiling">
+        <div class="name">
+          <h1><a href="/">Emir Ahmed</a></h1>
+          <p>CS &amp; EE @ Yale</p>
+        </div>
+        <svg class="lamp" viewBox="0 30 60 80" width="60" height="80" aria-hidden="true">
+          <line x1="30" y1="30" x2="30" y2="60" />
+          <rect x="26" y="60" width="8" height="6" />
+          <path d="M22 66 L38 66 L52 90 L8 90 Z" />
+          <path d="M23 90 A7 7 0 0 0 37 90" />
+          <g class="rays">
+            <line x1="30" y1="101" x2="30" y2="108" />
+            <line x1="21" y1="99" x2="16" y2="105" />
+            <line x1="39" y1="99" x2="44" y2="105" />
+          </g>
+        </svg>
+        <button id="switch" type="button" role="switch" aria-checked="true" aria-label="Lamp">
+          <svg viewBox="0 0 28 44" width="28" height="44" aria-hidden="true">
+            <polygon class="lever" points="21,18 21,26 4,24 4,20" />
+            <rect x="20" y="2" width="5" height="40" />
+          </svg>
+        </button>
+      </div>
+      <nav aria-label="Site">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/blog/faking-art.html">Faking Art</a>
+        <a href="/blog/pec-synth.html">Pec Synth</a>
+      </nav>
+    </header>
+
+    <main class="post">
+      <h2>Blog</h2>
+
+      <article>
+        <h3><a href="/blog/faking-art.html">Faking Art</a></h3>
+        <p>
+          Can a palette and a spatial bias make pure randomness look intentional? Notes on building a generative
+          painting, starting from a trick for faking piano skills.
+        </p>
+      </article>
+
+      <article>
+        <h3><a href="/blog/pec-synth.html">Pec Synth / MPec / Absolute Absurdity</a></h3>
+        <p>
+          On absurdity in art, and on turning a shower thought into an instrument that plays Turkish maqams when I
+          flex my chest.
+        </p>
+      </article>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

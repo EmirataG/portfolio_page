@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Faking Art · Emir Ahmed</title>
+    <script>
+      // Set the theme before first paint so the page never flashes the wrong mode.
+      try {
+        if (localStorage.getItem('lamp') === 'off') document.documentElement.dataset.lamp = 'off'
+      } catch {}
+    </script>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="ceiling">
+        <div class="name">
+          <h1><a href="/">Emir Ahmed</a></h1>
+          <p>CS &amp; EE @ Yale</p>
+        </div>
+        <svg class="lamp" viewBox="0 30 60 80" width="60" height="80" aria-hidden="true">
+          <line x1="30" y1="30" x2="30" y2="60" />
+          <rect x="26" y="60" width="8" height="6" />
+          <path d="M22 66 L38 66 L52 90 L8 90 Z" />
+          <path d="M23 90 A7 7 0 0 0 37 90" />
+          <g class="rays">
+            <line x1="30" y1="101" x2="30" y2="108" />
+            <line x1="21" y1="99" x2="16" y2="105" />
+            <line x1="39" y1="99" x2="44" y2="105" />
+          </g>
+        </svg>
+        <button id="switch" type="button" role="switch" aria-checked="true" aria-label="Lamp">
+          <svg viewBox="0 0 28 44" width="28" height="44" aria-hidden="true">
+            <polygon class="lever" points="21,18 21,26 4,24 4,20" />
+            <rect x="20" y="2" width="5" height="40" />
+          </svg>
+        </button>
+      </div>
+      <nav aria-label="Site">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/blog/faking-art.html">Faking Art</a>
+        <a href="/blog/pec-synth.html">Pec Synth</a>
+      </nav>
+    </header>
+
+    <main class="post">
+      <h2>Faking Art</h2>
+
+      <figure>
+        <img src="/blog/faking-art-example.jpg" alt="Example generated artwork" width="1800" height="1131" />
+      </figure>
+
+      <h3>The Vision</h3>
+
+      <p>When my best friend from high school asked me how to fake piano skills, I told him to follow 2 simple steps:</p>
+      <ol>
+        <li>Holding the pedal down, play black notes in any order with the right hand.</li>
+        <li>Play an Eb + Bb with the left hand at regular intervals.</li>
+      </ol>
+
+      <p>
+        He sat down and in a few minutes was playing what to a non-musician might sound like chill cocktail piano
+        music. For sound to be perceived as music (I am just trying to make a point, not offer a definition for
+        music; the latter is an ambitious undertaking) a sense of regularity in time and coherence in the choice of
+        pitch classes is usually more than enough. In the “technique” my friend is now a master of, the open fifth
+        in the left hand creates a sense of metric grounding, while the pentatonic scale makes it pretty much
+        impossible for any note played to sound particularly unexpected or out of place. The applications of this
+        simple idea are, fortunately, not confined to faking piano skills—while actual improvisation presupposes
+        more musicality and intentionality, it still strongly relies on a sense of musical time and “trust” in the
+        chosen scale.
+      </p>
+
+      <p>
+        This project started with the question of whether this idea had its analog in the world of visual art. That
+        is, are there any two (or more, or less) principles so fundamental that, even paired with absolute
+        randomness, can create visually appealing art if followed? Essentially, this project is a test of the
+        hypothesis that these two principles are <em>spatial bias</em> and <em>palette</em>. The former is the
+        analog of musical meter. Notes are laid out in time and a completely random layout that doesn’t fit in any
+        metric grid is hardly ever appealing to the ear. (Static) Visual art is laid out in space and coherence
+        tends not to arise when strokes and splashes are thrown around randomly. The equivalent of metric grounding
+        here could be a point that all visual elements are biased towards. The palette is the scale—it ensures that
+        no color sticks out in an unpleasant way. “How can I fake art skills” isn’t a question I feel qualified to
+        answer, but this project explores whether the principles described above constitute a viable approach.
+      </p>
+
+      <h3>The Process, The Decisions</h3>
+
+      <p>The initial vision for the project was as follows:</p>
+      <ol>
+        <li>
+          The piece starts as a blank canvas, and some number of colors belonging to a pre-defined palette get
+          spawned as circles at random locations.
+        </li>
+        <li>
+          An attraction function uses distance between circles and their colors to calculate a direction vector for
+          each at each time step.
+        </li>
+        <li>Based on the vector, each circle updates its location, leaving a solid trace behind.</li>
+        <li>
+          To introduce spatial bias, there is an invisible point that all colors are strongly attracted to (the
+          gravity point.)
+        </li>
+        <li>
+          Every time two circles collide, they spawn a new one at the point of collision with a color that is a mix
+          of theirs and an additional one with a random color from the palette at a random point (so that the
+          number of circles is always the same).
+        </li>
+        <li>We just sit back and watch art being made.</li>
+      </ol>
+
+      <p>
+        Some problems with this plan were caught upon first inspection, before any coding. In retrospect, the one
+        that looks the most glaring is the mixing of colors—it essentially guarantees that the colors will start
+        drifting away from the palette, completely undermining the hypothesis the project is built on. Dropping
+        this idea proved very convenient too, as the attraction function’s job became significantly easier—since
+        the number of colors that could appear on the canvas was now bounded, “attraction constants” could be
+        stored in a matrix where entry <code>[i][j]</code> shows how much the color at index <code>i</code> of the
+        color list attracts or repels the color at index <code>j</code>.
+      </p>
+
+      <p>
+        Getting colored circles to move around on the screen unveiled more issues, showing that I was still far
+        from the optimal setup to test my hypothesis. First, having new circles spawn on collision points turned
+        out to have a pretty underwhelming effect: it was often the case that collisions happened very close to
+        other circles headed to the same point. The newly spawned circle would therefore immediately find another
+        one to collide with, often barely leaving a trace. The simplest fix was to have both new circles spawn at
+        random locations, and while it was a downgrade in complexity, it produced more appealing results. One thing
+        to note is that, in the very first version, I hadn’t implemented the gravity point, and while it was
+        somewhat fun to see the colors move and change directions as the scene progressed, the output looked and
+        felt like nothing more than randomness.
+      </p>
+
+      <p>
+        A major problem in the setup was that the artwork was never “done”: colors just kept spawning. Fortunately,
+        this had an easy solution: do not let colors cross existing traces and stop when no more circles can be
+        spawned. Beyond fixing the issue, implementing this had an unexpected positive side effect: before, despite
+        the attraction relationships, colors would generally go in the direction of the gravity point in a fairly
+        predictable way. Now, traces acted as obstacles and made trajectories a lot more varied and
+        interesting—randomness seemed to be contributing in a beautiful way. However, an artifact of the inherent
+        randomness that I really disliked was the occasional-but-frequent-enough clustering of traces of the same
+        color. To get rid of it, I made the diagonal entries in the attraction matrix negative and large in
+        magnitude so that instances of the same color strongly repel each other.
+      </p>
+
+      <p>
+        In terms of implementation, not crossing a trace comes down to looking before stepping. Each frame, a
+        circle probes three points just past its leading edge—the center and the two corners of the stroke—and
+        checks whether the paint layer already has color there. If the way is clear it moves; if not, it tries the
+        same step rotated by 30°, then 60°, then 90° to either side, which is why traces slide along each other
+        instead of stopping dead on contact. Only when every direction is blocked does the circle give up, and a
+        new one is spawned somewhere blank.
+      </p>
+
+      <pre><code>// splash.js (simplified)
+pathClear(v) {
+  const ahead = v.copy().setMag(this.r + 2);
+  const side = createVector(-ahead.y, ahead.x).setMag(this.r - 1);
+  for (const p of [ahead, ahead.copy().add(side), ahead.copy().sub(side)]) {
+    if (isPainted(this.pos.x + p.x, this.pos.y + p.y)) return false;
+  }
+  return true;
+}
+
+move() {
+  for (const angle of DEFLECT_ANGLES) { // 0, ±30°, ±60°, ±90°
+    const v = this.vel.copy().rotate(angle);
+    if (!this.pathClear(v)) continue;
+    this.vel = v;
+    this.pos.add(this.vel);
+    return;
+  }
+  this.blocked = true; // nowhere to go: replaced next frame
+}</code></pre>
+
+      <p>
+        The last problem I had to address was all the blank space that remained after no circle could be spawned.
+        One idea I had was to keep making the circle radii smaller, allowing colors to be spawned in tighter
+        spaces, until everything was colored, but I ended up implementing something conceptually simpler: each
+        trace starts expanding in every direction until it meets another one or hits a wall. This introduced a
+        variety of shapes in the final result and made it look a lot more like an actual painting. And… I was
+        pretty happy with what I was seeing! More importantly, I believe that my hypothesis, while by no stretch of
+        my imagination groundbreaking, at least seemed to be confirmed: the output of each run of the generation
+        process looked like something created with intentionality.
+      </p>
+
+      <p>
+        There are a few things to say about the choice of colors too. Initially, I hadn’t chosen a palette. I was
+        rolling with a set of colors that Claude suggested but soon enough realized that my AI assistant, as
+        impressive as it is, didn’t quite have the artistic taste of its French namesake. I tried to think of
+        paintings whose palettes meaningfully capture something in their choice of color alone.
+        <em>The Harvester</em> by the celebrated Bulgarian painter Vladimir “the Master” Dimitrov does it for me—I
+        cross my eyes to blur my vision, and even without making out the subject, I see, feel, and smell the
+        village, the sun, and the crushingly hard work. So I took 15 of the colors used in it and made them my
+        palette.
+      </p>
+
+      <figure>
+        <img
+          src="/blog/the-harvester.jpg"
+          alt="The Harvester by Vladimir Dimitrov"
+          width="1400"
+          height="1233"
+          loading="lazy"
+        />
+        <figcaption><em>The Harvester</em>, Vladimir Dimitrov</figcaption>
+      </figure>
+
+      <p>
+        A less-deep-but-deeply-effective creative choice I made along the way was to replace the white background
+        with a zoomed-in image of a piece of paper and make the circles and traces translucent. This creates a
+        sense of realism that, I believe, really adds to the appeal of the generated artwork. Simply lowering the
+        opacity of the strokes didn’t work, though: a trace is drawn as many overlapping short segments, so
+        translucent color piles up and goes solid. Instead, the circles paint opaque colors into an offscreen
+        layer, and every frame the paper image is multiplied over it, so the texture shows through the colors
+        evenly.
+      </p>
+
+      <pre><code>// splash.js: each step is drawn into the offscreen `paint` layer
+show() {
+  paint.stroke(PALETTE_HEX[this.col_id]);
+  paint.strokeWeight(this.r * 2);
+  paint.line(this.prev.x, this.prev.y, this.pos.x, this.pos.y);
+}</code></pre>
+
+      <pre><code>// sketch.js: screen = paint x paper
+function composite() {
+  image(paint, 0, 0, width, height);
+  blendMode(MULTIPLY);
+  drawPaper();
+  blendMode(BLEND);
+}</code></pre>
+
+      <h3>The Important Question: Can I Plug This into Any Monitor?</h3>
+
+      <p>
+        Yes, as far as my testing could prove. The radii of the circles (and therefore the width of the traces) and
+        their speed are a function of the window size. Bigger screen = wider traces and faster circles; smaller
+        screen = thinner traces and slower circles. This ensures that just a few strokes can never fill up the
+        whole canvas and that the canvas never takes too long to fill up, even if it is very big.
+      </p>
+
+      <h3>Demo</h3>
+
+      <p>
+        You can watch a piece being generated
+        <a href="https://www.youtube.com/watch?v=EVDDfnk5cVI" target="_blank" rel="noopener">here</a>.
+      </p>
+
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/EVDDfnk5cVI"
+        title="Faking Art demo"
+        loading="lazy"
+        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+
+      <p class="more">
+        The code is on <a href="https://github.com/EmirataG/faking-art" target="_blank" rel="noopener">GitHub</a>.
+      </p>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
