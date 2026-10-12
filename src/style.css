@@ -2,6 +2,10 @@
   color-scheme: light;
   background: #fff;
   color: #000;
+  /* the switch plate pokes 3px past the edge; don't let it cause sideways scroll */
+  overflow-x: clip;
+  /* keep headings clear of the sticky header when jumped to */
+  scroll-padding-top: 8.5rem;
 }
 
 :root[data-lamp='off'] {
@@ -11,21 +15,133 @@
 }
 
 body {
-  margin: 1.5rem 2rem;
+  --gutter: 2rem;
+  margin: 0 var(--gutter) 1.5rem;
 }
 
+/* Name, lamp, switch and section links: one bar that stays at the top */
+
 header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  /* full-bleed, so the switch plate still meets the screen edge */
+  margin: 0 calc(-1 * var(--gutter));
+  padding: 0 var(--gutter);
+  border-bottom: 1px solid;
+  background: #fff;
+}
+
+[data-lamp='off'] header {
+  background: #000;
+}
+
+.ceiling {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+}
+
+.name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.75rem;
+  margin-right: auto;
 }
 
 h1 {
   margin: 0;
 }
 
+.name p {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
 p {
   margin: 0.5rem 0 0;
+}
+
+a {
+  color: inherit;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  padding: 0.25rem 0 0.5rem;
+}
+
+main {
+  max-width: 42rem;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+
+main > p {
+  margin-top: 1.5rem;
+}
+
+h2 {
+  margin: 2.5rem 0 0;
+}
+
+article {
+  margin-top: 1.25rem;
+}
+
+h3 {
+  margin: 0;
+}
+
+.meta {
+  margin: 0;
+  font-style: italic;
+}
+
+ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.25rem;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25rem 1rem;
+  margin: 1rem 0 0;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  margin: 0;
+}
+
+#contact {
+  margin-bottom: 4rem;
+}
+
+@media (max-width: 40rem) {
+  :root {
+    /* the nav wraps onto two rows here */
+    scroll-padding-top: 10rem;
+  }
+
+  body {
+    --gutter: 1rem;
+  }
+
+  dl {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  dd {
+    margin-bottom: 0.5rem;
+  }
 }
 
 svg {
@@ -41,7 +157,7 @@ svg {
 #switch {
   /* cancel the page margin (and the 3px of empty viewBox behind the plate)
      so the plate sits against the screen edge like a wall */
-  margin-right: calc(-2rem - 3px);
+  margin-right: calc(-1 * var(--gutter) - 3px);
   padding: 0;
   border: 0;
   background: none;
@@ -67,9 +183,8 @@ svg {
 /* Hanging lamp */
 
 .lamp {
-  position: absolute;
-  top: 0;
-  right: 6rem;
+  align-self: flex-start;
+  margin-right: calc(var(--gutter) * 2);
   transform-origin: 50% 0;
   animation: swing 3.5s ease-in-out infinite alternate;
   pointer-events: none;

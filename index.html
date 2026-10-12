@@ -14,28 +14,289 @@
     <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
-    <svg class="lamp" viewBox="0 0 60 110" width="60" height="110" aria-hidden="true">
-      <line x1="30" y1="0" x2="30" y2="60" />
-      <rect x="26" y="60" width="8" height="6" />
-      <path d="M22 66 L38 66 L52 90 L8 90 Z" />
-      <path d="M23 90 A7 7 0 0 0 37 90" />
-      <g class="rays">
-        <line x1="30" y1="101" x2="30" y2="108" />
-        <line x1="21" y1="99" x2="16" y2="105" />
-        <line x1="39" y1="99" x2="44" y2="105" />
-      </g>
-    </svg>
-
     <header>
-      <h1>Emir Ahmed</h1>
-      <button id="switch" type="button" role="switch" aria-checked="true" aria-label="Lamp">
-        <svg viewBox="0 0 28 44" width="28" height="44" aria-hidden="true">
-          <polygon class="lever" points="21,18 21,26 4,24 4,20" />
-          <rect x="20" y="2" width="5" height="40" />
+      <div class="ceiling">
+        <div class="name">
+          <h1>Emir Ahmed</h1>
+          <p>CS &amp; EE @ Yale</p>
+        </div>
+        <svg class="lamp" viewBox="0 30 60 80" width="60" height="80" aria-hidden="true">
+          <line x1="30" y1="30" x2="30" y2="60" />
+          <rect x="26" y="60" width="8" height="6" />
+          <path d="M22 66 L38 66 L52 90 L8 90 Z" />
+          <path d="M23 90 A7 7 0 0 0 37 90" />
+          <g class="rays">
+            <line x1="30" y1="101" x2="30" y2="108" />
+            <line x1="21" y1="99" x2="16" y2="105" />
+            <line x1="39" y1="99" x2="44" y2="105" />
+          </g>
         </svg>
-      </button>
+        <button id="switch" type="button" role="switch" aria-checked="true" aria-label="Lamp">
+          <svg viewBox="0 0 28 44" width="28" height="44" aria-hidden="true">
+            <polygon class="lever" points="21,18 21,26 4,24 4,20" />
+            <rect x="20" y="2" width="5" height="40" />
+          </svg>
+        </button>
+      </div>
+      <nav aria-label="Sections">
+        <a href="#research">Research</a>
+        <a href="#work">Work</a>
+        <a href="#robotics">Robotics</a>
+        <a href="#software">Software</a>
+        <a href="#hardware">Hardware</a>
+        <a href="#art">Art</a>
+        <a href="#skills">Skills</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+      </nav>
     </header>
-    <p>Computer Science &amp; Electrical Engineering @ Yale</p>
+
+    <main>
+      <p>
+        I'm a sophomore at Yale building robots, web apps and the occasional musical instrument. Most of my work
+        sits where software meets something physical: a rover's radio link, a robot photographer, a wearable that
+        pokes you when you slouch.
+      </p>
+
+      <section id="research">
+        <h2>Research</h2>
+
+        <article>
+          <h3>Shutter</h3>
+          <p class="meta">Research Assistant · Yale, with Dr. Marynel Vázquez</p>
+          <p>
+            Shutter is a robot photographer headed for the Yale Peabody Museum. I own the full migration of its
+            codebase.
+          </p>
+        </article>
+
+        <article>
+          <h3>Youwrite.ai</h3>
+          <p class="meta">Research Assistant &amp; Developer · Yale, with Dr. Marynel Vázquez</p>
+          <p>A writing platform that helps researchers produce clearer papers through passive AI assistance.</p>
+          <ul>
+            <li>Authors state the goals of a paper up front, then lay out their ideas in a flow graph.</li>
+            <li>The graph stays in sync with a text editor where the actual writing happens.</li>
+            <li>
+              An LLM works in the background like a supervisor: it doesn't write for you, it asks questions when
+              something is unclear.
+            </li>
+          </ul>
+        </article>
+
+        <article>
+          <h3>Historical London Stock Exchange data</h3>
+          <p class="meta">Research Assistant · Yale School of Management</p>
+          <p>
+            Cleaned a large database of historical financial data, mostly by checking spreadsheet rows against
+            scanned original documents.
+          </p>
+          <ul>
+            <li>
+              Built a desktop app for the team that opens the right page of the right PDF from a copied set of
+              Excel cells.
+            </li>
+            <li>Fine-tuned an LLM on the task to take over part of the manual checking.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section id="work">
+        <h2>Work</h2>
+
+        <article>
+          <h3>Building Interactive Machines</h3>
+          <p class="meta">Undergraduate Learning Assistant · Yale Computer Science</p>
+          <p>
+            A Yale course on building robots and other machines that interact with people. I help write the
+            assignments, hold office hours, and set up the machines and robots students use in class.
+          </p>
+        </article>
+
+        <article>
+          <h3>Turkish at Yale</h3>
+          <p class="meta">Web Developer · Department of Near Eastern Languages &amp; Civilizations</p>
+          <p>Building the website for Yale's Turkish program, along with a companion site for its students.</p>
+          <ul>
+            <li>A library of the teaching resources Prof. Ezgi Yalcin has collected over the years.</li>
+            <li>Flashcards that students can browse and create sets for.</li>
+            <li>AI-generated educational videos that I produced with HeyGen.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section id="robotics">
+        <h2>Robotics</h2>
+
+        <article>
+          <h3>Mars Rover, Yale Undergraduate Robotics</h3>
+          <p class="meta">Communications &amp; Control Subteam Lead · Sept 2026 – present</p>
+          <p>
+            I lead wireless communications, telemetry and teleoperation for Yale's entry in the University Rover
+            Challenge 2027.
+          </p>
+          <ul>
+            <li>
+              Designed the rover-to-base radio architecture: a 2.4 GHz Ubiquiti main link with a 915 MHz backup,
+              modeled on top teams' published designs and fitted to URC band rules and FCC limits. Specified and
+              procured the full RF system for about $590.
+            </li>
+            <li>
+              Built a ROS 2 bridge that carries commands and telemetry over a low-bandwidth serial radio, with
+              packet framing, CRC error checking and rate limiting.
+            </li>
+            <li>
+              Set up the rover and base-station Raspberry Pi 5s on Ubuntu and ROS 2 Jazzy, with secure remote
+              access for the team.
+            </li>
+            <li>
+              Evaluated perception and navigation hardware (stereo depth camera, NVIDIA Jetson, end-effector
+              camera, RTK GNSS) against cost, rules and competition evidence.
+            </li>
+          </ul>
+        </article>
+      </section>
+
+      <section id="software">
+        <h2>Software</h2>
+
+        <article>
+          <h3><a href="https://manuscript.video" target="_blank" rel="noopener">Manuscript</a></h3>
+          <p class="meta">Creator and sole developer · 2026</p>
+          <p>
+            A web app that turns a music score and a recording into a synced score-animation video, with every
+            note lighting up as it sounds.
+          </p>
+          <ul>
+            <li>
+              Rendering runs entirely in the browser: Verovio (WASM) engraving, a beat-domain timing core with
+              user-placed sync anchors, and MP4 export up to 4K through WebCodecs.
+            </li>
+            <li>
+              An automatic audio-to-score aligner proposes sync anchors from a real performance; pitch-preserving
+              slow-motion scrubbing handles manual correction.
+            </li>
+            <li>
+              GPU-warped previews (perspective and curved staves), progressive note reveal, and layered highlights
+              that stay pixel-aligned between live preview and export.
+            </li>
+            <li>
+              Shipped end to end on Next.js, TypeScript and Firebase: direct-to-storage uploads, versioned media
+              delivery with browser-side caching, autosave with undo/redo, and a project dashboard.
+            </li>
+            <li>
+              A performance and parity harness plus unit and integration tests (Vitest, real Verovio fixtures)
+              keep preview and export frame-identical.
+            </li>
+          </ul>
+          <p>
+            See example videos on the
+            <a href="https://www.youtube.com/@ManuscriptScoreVisualisation/videos" target="_blank" rel="noopener">YouTube channel</a>.
+          </p>
+        </article>
+      </section>
+
+      <section id="hardware">
+        <h2>Hardware</h2>
+
+        <article>
+          <h3><a href="https://github.com/filippo-fonseca/posture-poke" target="_blank" rel="noopener">PosturePoke</a></h3>
+          <p class="meta">5th place, YHack 2026 Hardware Track · March 2026</p>
+          <p>
+            A wearable posture monitor, built with a team, that clips to your collar and escalates from beeps to
+            an AI voice coach to a servo-powered poke when you slouch.
+          </p>
+          <ul>
+            <li>
+              Streams IMU pitch and roll at 10 Hz from an Arduino straight to the browser over the Web Serial API,
+              with no server in between, and calibrates per user.
+            </li>
+            <li>
+              Custom coaches are generated from a text description: Gemini writes the in-character scripts and
+              ElevenLabs designs the voice and speaks them.
+            </li>
+            <li>A social layer on Firebase adds friends, shared coaches and session history charts.</li>
+          </ul>
+        </article>
+
+        <article>
+          <h3><a href="https://github.com/EmirataG/pec-synth" target="_blank" rel="noopener">Pec Synth</a></h3>
+          <p class="meta">A wearable instrument played by flexing the pecs</p>
+          <p>
+            Two IMU boards (XIAO nRF52840, Arduino C++) stream motion to a Python host on a Raspberry Pi, which
+            detects flexes, maps them to melodies in Turkish maqams and synthesizes the audio.
+          </p>
+          <ul>
+            <li>Tuned detection against a recorded, labeled session to 53 of 54 flexes.</li>
+            <li>Cut flex-to-sound latency from about 300 ms to under 100 ms.</li>
+            <li>Built an ESP32-S3 control box and a systemd service so it starts on boot.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section id="art">
+        <h2>Art</h2>
+
+        <article>
+          <h3><a href="https://github.com/EmirataG/faking-art" target="_blank" rel="noopener">Faking Art</a></h3>
+          <p class="meta">Generative painting for a public LED display</p>
+          <p>
+            A p5.js piece in which splashes of color from a painter's palette are pulled toward a hidden gravity
+            point, can't cross each other's traces, and grow until they fill the canvas. It asks whether palette
+            and spatial bias alone are enough to make randomness read as intentional. Runs unattended on a
+            Raspberry Pi.
+          </p>
+        </article>
+
+        <article>
+          <h3><a href="https://www.emirbachtyar.me/" target="_blank" rel="noopener">Artist page</a></h3>
+          <p>I write music and play the piano, so I built myself a small page for it.</p>
+        </article>
+      </section>
+
+      <section id="skills">
+        <h2>Skills</h2>
+        <dl>
+          <dt>Languages</dt>
+          <dd>TypeScript, JavaScript, Python, C, C++, C#, SQL, Racket</dd>
+          <dt>Robotics</dt>
+          <dd>ROS 2, MoveIt</dd>
+          <dt>Web</dt>
+          <dd>React, Next.js, Tailwind CSS, Firebase, Supabase</dd>
+          <dt>AI</dt>
+          <dd>OpenAI API, ElevenLabs, HeyGen, LLM fine-tuning on Vertex AI</dd>
+          <dt>Data</dt>
+          <dd>NumPy, pandas, scikit-learn, Jupyter, BeautifulSoup</dd>
+          <dt>Desktop</dt>
+          <dd>WPF, Windows Forms, PySide6</dd>
+        </dl>
+      </section>
+
+      <section id="education">
+        <h2>Education</h2>
+
+        <article>
+          <h3>Yale University</h3>
+          <p class="meta">New Haven, CT · Class of 2028</p>
+          <p>B.S. candidate in Electrical Engineering and Computer Science.</p>
+        </article>
+
+        <article>
+          <h3>American College of Sofia</h3>
+          <p class="meta">Sofia, Bulgaria · Class of 2024</p>
+          <p>Specialized in Hardware &amp; Software Technologies. Floyd Black Award.</p>
+        </article>
+      </section>
+
+      <section id="contact">
+        <h2>Contact</h2>
+        <!-- TODO: add LinkedIn link -->
+        <p>
+          <a href="mailto:emir.ahmed@yale.edu">emir.ahmed@yale.edu</a> ·
+          <a href="https://github.com/EmirataG" target="_blank" rel="noopener">GitHub</a>
+        </p>
+      </section>
+    </main>
 
     <script type="module" src="/src/main.ts"></script>
   </body>
