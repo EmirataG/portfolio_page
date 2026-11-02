@@ -239,6 +239,32 @@
         <h2>Hardware</h2>
 
         <article>
+          <h3><a href="https://github.com/EmirataG/gravity-pulls" target="_blank" rel="noopener">Gravity Pulls</a></h3>
+          <p class="meta">A weighted ball that composes a piano piece from how it rolls · November 2026</p>
+          <p>
+            A 9 cm sphere with an IMU (XIAO nRF52840, Arduino C++) sealed inside reports which tile of its surface
+            touches the floor over BLE. A Python host on a Raspberry Pi turns each roll into a short piano piece:
+            tiles become the melody, the net spin picks the mode, and wall hits set the meter.
+          </p>
+          <ul>
+            <li>
+              Designed the custom wall-hit sensor: two piezos under the arena read by an ESP32-S3, each hit
+              confirmed against the ball's own accelerometer within 100 ms, which fixed the false and missed hits
+              either source gave alone.
+            </li>
+            <li>
+              Composition engine with a rhythm state machine, Viterbi voice leading for the chords, and meters up
+              to 9/8; plays through FluidSynth with live sonification of the roll before the piece.
+            </li>
+            <li>Everything about the sealed ball is calibrated and tuned over the air; runs as a boot service.</li>
+          </ul>
+          <p>
+            <a href="blog/gravity-pulls.html">Read the blog post</a> ·
+            <a href="https://youtu.be/AiX08H_7uUM" target="_blank" rel="noopener">Watch the demo</a>
+          </p>
+        </article>
+
+        <article>
           <h3><a href="https://github.com/filippo-fonseca/posture-poke" target="_blank" rel="noopener">PosturePoke</a></h3>
           <p class="meta">5th place, YHack 2026 Hardware Track · March 2026</p>
           <p>

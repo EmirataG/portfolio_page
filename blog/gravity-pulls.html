@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en" class="photos">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gravity Pulls · Emir Ahmed</title>
+    <script>
+      // Set the theme before first paint so the page never flashes the wrong mode.
+      try {
+        if (localStorage.getItem('lamp') === 'off') document.documentElement.dataset.lamp = 'off'
+      } catch {}
+    </script>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="masthead">
+        <div class="name">
+          <h1><a href="../">Emir Ahmed</a></h1>
+          <p>CS &amp; EE @ Yale</p>
+        </div>
+        <nav aria-label="Site">
+          <a href="../">Home</a>
+          <a href="./">Blog</a>
+          <a href="faking-art.html">Faking Art</a>
+          <a href="pec-synth.html">Pec Synth</a>
+          <a href="gravity-pulls.html">Gravity Pulls</a>
+        </nav>
+      </div>
+      <div class="fixture">
+        <img class="lamp photo" src="/photos/lamp.png" alt="" width="56" height="44" />
+        <svg class="lamp drawing" viewBox="0 30 60 80" width="60" height="80" aria-hidden="true">
+          <line x1="30" y1="30" x2="30" y2="60" />
+          <rect x="26" y="60" width="8" height="6" />
+          <path d="M22 66 L38 66 L52 90 L8 90 Z" />
+          <path d="M23 90 A7 7 0 0 0 37 90" />
+          <g class="rays">
+            <line x1="30" y1="101" x2="30" y2="108" />
+            <line x1="21" y1="99" x2="16" y2="105" />
+            <line x1="39" y1="99" x2="44" y2="105" />
+          </g>
+        </svg>
+      </div>
+      <button id="switch" type="button" role="switch" aria-checked="true" aria-label="Lamp">
+        <img class="photo on" src="/photos/switch-on.png" alt="" width="30" height="45" />
+        <img class="photo off" src="/photos/switch-off.png" alt="" width="30" height="45" />
+        <svg class="drawing" viewBox="0 0 28 44" width="28" height="44" aria-hidden="true">
+          <polygon class="lever" points="21,18 21,26 4,24 4,20" />
+          <rect x="20" y="2" width="5" height="40" />
+        </svg>
+      </button>
+    </header>
+
+    <a class="printer" href="../resume.pdf" download="Emir Ahmed - Resume.pdf" aria-label="Download resume (PDF)" title="Download resume (PDF)">
+      <img class="photo" src="/photos/printer.png" alt="" width="72" height="44" />
+      <svg class="drawing" viewBox="0 0 32 24" width="32" height="24" aria-hidden="true">
+        <path class="sheet" d="M10 9 V2 H22 V9" />
+        <rect x="3" y="9" width="26" height="14" rx="1.5" />
+        <line x1="8" y1="18" x2="24" y2="18" />
+        <line x1="24" y1="13" x2="25" y2="13" />
+      </svg>
+    </a>
+
+    <main class="post">
+      <h2>Gravity Pulls</h2>
+
+      <figure>
+        <img src="/blog/gravity-pulls-arena.jpg" alt="The ball in its arena" width="1600" height="1200" />
+      </figure>
+
+      <h3>Faking Art, Again</h3>
+
+      <p>
+        I’ve told you about the story of how I taught my friend to fake piano skills (check
+        <a href="faking-art.html">this older blog post</a> out if you don’t know what I’m talking about.) As a
+        musician, something about the mere attempt to reduce music making to something so trivial doesn’t quite
+        sit right with me, but I also find the idea of determining what gives art structure and pairing it with
+        randomness to create new art pretty fascinating. Yes, I will be faking art… again
+      </p>
+
+      <p>
+        Thinking about structure in music, the gravity analogy came to mind—at least the way I understand it, the
+        idea that notes and harmonies tend to move in accordance with the force of “musical pull”. It is an
+        incredibly general statement, but it is true that <em>si</em> seems to be strongly attracted to
+        <em>do</em>, or that <em>fa</em> seems to want to go down to <em>mi</em>. For this project, I wanted to
+        make that pull literal. If a melody is a thing that wanders around and eventually falls back home, then
+        the most honest instrument for it is a thing that wanders around and eventually falls back home: a ball
+        with a weight in it.
+      </p>
+
+      <h3>The Vision</h3>
+
+      <p>
+        Just a sphere, 9 cm in diameter, with a motion sensor sealed inside and additional weight on one of the
+        poles, and a round plywood arena for it to roll in. Ball pushed → rolls → bumps into the wall a few times →
+        wobbles → settles with the heavy pole down. A second later, a Raspberry Pi plays a short piano piece made
+        out of that roll.
+      </p>
+
+      <p>
+        The surface of the ball is divided into tiles (like a globe): bands between the poles, and meridians
+        dividing each band into seven slivers. Every tile is mapped to a scale degree. Moving one tile along a
+        parallel is a step of the scale, moving one band toward the light pole is a step too (with one bigger leap
+        hidden in the middle of the ball), and the heavy pole is <em>do</em>. The sensor doesn’t know where the
+        ball is in the room, but it always knows which way is down, and that is all it needs to tell which tile is
+        touching the floor. The tiles the ball rests on, in order, are the melody. Since the heavy pole is where
+        every roll ends, every melody ends on the tonic. Gravity (the real one!) does the resolving.
+      </p>
+
+      <p>
+        Two more things come from the roll. How far the ball turned around the vertical, between the push and the
+        rest, picks the mode: seven sectors of a full turn, from Lydian around to Locrian. And how many times it
+        hit the wall picks the time signature: two hits is 2/4, three is 3/4, up to 9/8 before it loops back
+        around. Some time signatures are played as meters characteristic of Bulgarian folk music. For example, 7/8
+        is played as <em>long-short-short</em>, and 8/8, as <em>long-short-long</em>.
+      </p>
+
+      <h3>Making the Ball</h3>
+
+      <p>
+        The ball is two printed hemispheres that press-fit together, with a Seeed XIAO nRF52840 Sense, a battery,
+        and the weight inside. The sensor talks to the Pi over Bluetooth, so once the ball is closed, that is it:
+        nothing can be plugged in, and everything about the ball, including which way its heavy pole points and
+        where its band edges sit, has to be sent in over the air. That turned out to be a good constraint. It
+        forced me to make everything about the ball tunable from a text file on the Pi, and the ball itself only
+        ever reports tile indices; what they mean musically is decided elsewhere.
+      </p>
+
+      <p>
+        The press fit was the first thing to go wrong. The first print closed but didn’t stay closed (you don't
+        want the sphere to open mid-roll). I reprinted with a tighter fit, which was then too tight to close
+        easily, and reprinted again. The version that finally held took a couple of iterations of adjusting the
+        lip by fractions of a millimeter.
+      </p>
+
+      <figure>
+        <img src="/blog/gravity-pulls-ball.jpg" alt="The ball, closed, sitting in the arena" width="1600" height="1200" loading="lazy" />
+      </figure>
+
+      <figure>
+        <img src="/blog/gravity-pulls-ball-open.jpg" alt="The ball open, with the sensor board and battery inside" width="1600" height="1200" loading="lazy" />
+      </figure>
+
+      <h3>The Custom Sensor: Hearing the Wall</h3>
+
+      <p>
+        Counting wall hits sounded like the easy part: two piezo discs glued under the arena’s support plates feel
+        the ring vibrate when the ball hits it, and an ESP32 hidden under the arena counts the spikes. It was in
+        fact the easy part, but it took longer than it should have.
+      </p>
+
+      <p>
+        The first problem was wires. The piezos came with thin, fragile leads, and the ESP32 sits under the arena,
+        far from both discs. My first idea was copper tape running along the underside of the plywood: stick the
+        leads to the tape, stick the tape to the board. Securing contact between the copper tape and the wire
+        leads was very unreliable. I ended up clamping each piezo lead into a screw terminal right next to the
+        disc and running proper, longer wires from the terminals to the ESP32.
+      </p>
+
+      <figure>
+        <img src="/blog/gravity-pulls-under-the-arena.jpg" alt="Under the arena: the Pi, the ESP32 on its breadboard, and the piezo wiring to the supports" width="1600" height="1918" loading="lazy" />
+      </figure>
+
+      <p>
+        The second problem: with the wires sorted, the piezos were detecting the wrong hits. A tap on the ring
+        with a finger registered; a ball rolling into the wall at speed sometimes didn’t; the ball brushing the
+        wall for half a second sometimes counted twice; someone bumping the table counted once. Thresholds didn’t
+        fix it, because a hard knock on one side of the ring and a soft one on the other look the same to a disc
+        that only feels how much the wood shakes.
+      </p>
+
+      <p>
+        The fix was to incorporate the accelerometer in the ball: when it hits the wall it feels a jolt of several
+        g, which nothing else in a roll looks like. So the ball reports every knock it feels, with a timestamp, and
+        the Pi counts a piezo hit only if the ball felt an impact within a tenth of a second of it. In other words,
+        the piezos say that an impact was felt, and the ball confirms it was the one doing the hitting. This
+        piezo-plus-IMU arrangement is the custom sensor in the project.
+      </p>
+
+      <h3>From a Roll to a Piece</h3>
+
+      <p>
+        What the Pi does with a roll is where the faking-art question is. The tiles become notes, but a ball
+        produces notes with no sense of time, so the rhythm is made up: a measure-by-measure pattern machine that
+        fills each beat with a cell (a quarter, two eighths, an eighth and two sixteenths…), repeats or varies the
+        previous measure the way a phrase would, and lets the final note take the rest of its bar. Under the
+        melody, a left hand picks chords. For every slot it considers every chord of the mode that contains the
+        melody note and searches for the smoothest path between voicings, as a pianist’s hand often would (well,
+        if they think about voice leading), starting and ending on the tonic in root position. Then FluidSynth
+        plays it as a piano, with the pedal down under each harmony and the ending held and faded rather than cut.
+      </p>
+
+      <p>
+        The part that makes it legible to a person standing there, though, is what happens <em>before</em> the
+        piece: while the ball is rolling, every tile it touches sounds immediately, with the pedal down for the
+        whole roll. You hear the raw material, every wobble and double visit included, and then you hear the same
+        notes come back a second later, cleaned up and set in time, in a mode you chose by how much you spun it.
+        The transition from noise to music is the whole point, and it is audible.
+      </p>
+
+      <p>
+        Does it work? It does what my friend’s black keys did, with a lot more machinery: a scale to trust and a
+        meter to stand on, and a resolution that is guaranteed by physics. I don’t think the pieces are good, but
+        I think they are convincingly <em>pieces</em>. Good enough.
+      </p>
+
+      <h3>Can I Roll It Again?</h3>
+
+      <p>
+        Yes. The Pi starts the whole thing on boot, reconnects to the ball when it wakes up, and a new push fades
+        out whatever is still playing.
+      </p>
+
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/AiX08H_7uUM"
+        title="Gravity Pulls demo"
+        loading="lazy"
+        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+
+      <p class="more">
+        The code is on <a href="https://github.com/EmirataG/gravity-pulls" target="_blank" rel="noopener">GitHub</a>.
+      </p>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
